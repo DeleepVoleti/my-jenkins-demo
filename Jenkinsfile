@@ -1,23 +1,36 @@
 pipeline {
-    agent any
+    agent any  // Run on any available Jenkins agent (machine)
 
     stages {
-        stage('Clone') {
+        stage('Checkout Code') {
             steps {
-                git 'https://github.com/your-username/my-ci-demo.git'
+                git 'https://github.com/DeleepVoleti/my-jenkins-demo.git'
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Install Python (Optional)') {
             steps {
-                sh 'pip install -r requirements.txt || true'
+                sh 'python3 --version'
+                sh 'pip3 install --upgrade pip'
             }
         }
 
-        stage('Test') {
+        stage('Run Unit Tests') {
             steps {
-                sh 'python -m unittest discover'
+                sh 'python3 -m unittest discover -s .'
             }
+        }
+    }
+
+    post {
+        always {
+            echo 'Build finished.'
+        }
+        success {
+            echo 'Build succeeded!'
+        }
+        failure {
+            echo 'Build failed.'
         }
     }
 }
