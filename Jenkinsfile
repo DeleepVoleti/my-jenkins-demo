@@ -2,16 +2,22 @@ pipeline {
     agent any
 
     stages {
-        stage('Install Python') {
+        stage('Set Up Python Environment') {
             steps {
-                sh 'python3 --version'
-                sh 'pip3 install --upgrade pip'
+                sh '''
+                    python3 -m venv venv
+                    . venv/bin/activate
+                    pip install --upgrade pip
+                '''
             }
         }
 
         stage('Run Unit Tests') {
             steps {
-                sh 'python3 -m unittest discover -s .'
+                sh '''
+                    . venv/bin/activate
+                    python -m unittest discover -s .
+                '''
             }
         }
     }
