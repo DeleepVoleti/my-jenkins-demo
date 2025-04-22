@@ -1,14 +1,8 @@
 pipeline {
-    agent any  // Run on any available Jenkins agent (machine)
+    agent any
 
     stages {
-        stage('Checkout Code') {
-            steps {
-                git 'https://github.com/DeleepVoleti/my-jenkins-demo.git'
-            }
-        }
-
-        stage('Install Python (Optional)') {
+        stage('Install Python') {
             steps {
                 sh 'python3 --version'
                 sh 'pip3 install --upgrade pip'
